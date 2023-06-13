@@ -1,21 +1,21 @@
+
 import React from 'react'
 import '../hojas-de-estilo/Tarea.css'
-import { AiFillCloseCircle } from "react-icons/ai";
+import { AiOutlineCloseCircle } from "react-icons/ai"
 
-const Tarea = ( {id, texto, completada, completarTarea, eliminarTarea} ) => {
+const Tarea = ({ id, texto, completada, completarTarea, eliminarTarea }) => {
     return(
-        <div className={ completada ? 'tarea-contenedor completada' : 'tarea-contenedor'}>
+        <div className={completada ? 'tarea-contenedor completada' : 'tarea-contenedor'}>
             <div 
-                className="tarea-texto"
-                onClick={()=> completarTarea(id)}
-                >
+            className="tarea-texto"
+            onClick={() => completarTarea(id)}> {/*completarTarea es una funcion*/}
                 {texto}
             </div>
-            
-            <div className="tarea-contenedor-icono"
-                onClick={() => eliminarTarea(id)}
+            <div 
+            className="tarea-contenedor-iconos"
+            onClick={() => eliminarTarea(id)}
             >
-                <AiFillCloseCircle className="tarea-icono" color='red'/>
+                <AiOutlineCloseCircle className="tarea-icono" color='yellow'/>
             </div>
         </div>
     );

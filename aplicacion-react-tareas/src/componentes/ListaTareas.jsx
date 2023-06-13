@@ -1,56 +1,57 @@
-import React, { useState } from 'react'
-import '../hojas-de-estilo/ListaTareas.css'
-import TareaFormulario from './TareaFormulario'
-import Tarea from '../componentes/Tarea'
 
+import React, { useState } from 'react'
+import TareaFormulario from './TareaFormulario'
+import '../hojas-de-estilo/ListaTareas.css'
+import Tarea from './Tarea';
 
 const ListaTareas = () => {
     const [tareas, setTareas] = useState([]);
 
-    const agregarTarea = tarea =>{
-        console.log(tarea)
-        /*Si la cadena no esta vacia */
-        if(tarea.texto.trim()){
-            tarea.texto = tarea.texto.trim();/*le quito los espacios en blaNCO */
-            const tareasActualizadas = [tarea, ...tareas]; /*genero un arr con todas las tareas anteriaores (...tareas) y la tarea nueva(tarea) */
-            setTareas(tareasActualizadas);/*actualizo el estado*/
+    const agregarTarea = (tarea) =>{
+        if(tarea.texto.trim()){ //probando que la cadena no ete vacia
+            tarea.texto = tarea.texto.trim();//quita los espacios en blanco
+            const tareasActualizadas= [tarea, ...tareas];
+            setTareas(tareasActualizadas);
         }
+
     }
 
-    const eliminarTarea = id =>{
-        const tareasActualizadas = tareas.filter(tarea => tarea.id !== id);
+    const eliminarTarea = (id) =>{
+        const tareasActualizadas = tareas.filter( tarea => tarea.id !== id);
         setTareas(tareasActualizadas);
     }
 
-    const completarTarea = id =>{
+    const completarTarea = (id) =>{
         const tareasActualizadas = tareas.map(tarea => {
             if(tarea.id === id){
                 tarea.completada = !tarea.completada;
             }
             return tarea;
-        });
-        setTareas(tareasActualizadas);
+        })
+        setTareas(tareasActualizadas)
     }
+
     return (
-        <>
-            <TareaFormulario onSubmit={agregarTarea}/>
+        <>{/*Frangmentos */}
+            <TareaFormulario onSubmit = {agregarTarea} />
             <div className='tareas-lista-contenedor'>
-                {/*Renderizar una lista de cpmponentes , tarea es un obj*/}
+                {/*renderizar una lista de componentes uso {}*/}
+                {/*Cada tarea se va representar como un objeto en el arreglo => useState([])*/}
                 {
-                    tareas.map((tarea)=>
-                    <Tarea 
-                        key={tarea.id} /*para que react sepa el orden y no los cambie al actualizar, no se puede acceder a key como un props*/
-                        id={tarea.id} /* */
-                        texto={tarea.texto}
-                        completada={tarea.completada}
-                        completarTarea={completarTarea}
-                        eliminarTarea={eliminarTarea}
-                    />
+                    tareas.map((tarea) =>
+                        <Tarea 
+                            key={tarea.id}//identifica ele en la lista y debe ser unico y no se pasa como props
+                            id= {tarea.id}
+                            texto={tarea.texto}
+                            completada={tarea.completada} //paso como props
+                            eliminarTarea={eliminarTarea} //paso como props
+                            completarTarea={completarTarea}
+                        />
                     )
                 }
             </div>
         </>
-    )
+    );
 }
 
 export default ListaTareas
